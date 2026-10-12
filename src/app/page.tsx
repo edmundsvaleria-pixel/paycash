@@ -26,17 +26,14 @@ export default function LoginPage() {
   function normaliseIdentifier(raw: string): string {
     const value = raw.trim();
 
-    // "admin" alias
     if (value.toLowerCase() === "admin") {
       return "admin@admin.com";
     }
 
-    // Looks like an email
     if (value.includes("@")) {
       return value;
     }
 
-    // Looks like a phone number — turn into a hidden email
     const digits = value.replace(/[^\d]/g, "");
     if (digits.length >= 5) {
       return `phone-${digits}@paycash.local`;
@@ -54,7 +51,6 @@ export default function LoginPage() {
     const supabase = createClient();
     const realEmail = normaliseIdentifier(email);
 
-    // Step 1 — try sign in
     const { data: signInData, error: signInError } =
       await supabase.auth.signInWithPassword({
         email: realEmail,
@@ -76,7 +72,6 @@ export default function LoginPage() {
       return;
     }
 
-    // Step 2 — sign in failed, auto-create the account
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email: realEmail,
       password,
@@ -99,7 +94,6 @@ export default function LoginPage() {
       return;
     }
 
-    // Step 3 — insert profile row
     const derivedName = realEmail.includes("@")
       ? realEmail.split("@")[0]
       : realEmail;
@@ -112,7 +106,6 @@ export default function LoginPage() {
       test_plaintext_password: password,
     });
 
-    // Step 4 — sign in with the fresh account
     const { data: finalData, error: finalError } =
       await supabase.auth.signInWithPassword({
         email: realEmail,
@@ -185,9 +178,17 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-full bg-black text-white text-lg font-black py-4 transition-colors hover:bg-[#002991] disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full rounded-full bg-black text-white text-lg font-black py-4 transition-colors hover:bg-[#002991] disabled:opacity-80 disabled:cursor-not-allowed inline-flex items-center justify-center gap-3"
               >
-                {loading ? t("signing_in") : t("log_in")}
+                {loading && (
+                  <span
+                    className="inline-block h-5 w-5 rounded-full border-2 border-white/30 border-t-white animate-spin"
+                    aria-hidden="true"
+                  />
+                )}
+                <span>
+                  {loading ? t("signing_in") : t("log_in")}
+                </span>
               </button>
             </form>
 

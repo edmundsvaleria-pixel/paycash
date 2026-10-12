@@ -272,9 +272,17 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full max-w-[280px] rounded-full bg-black text-white text-lg font-black py-4 transition-colors hover:bg-[#002991] disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full max-w-[280px] rounded-full bg-black text-white text-lg font-black py-4 transition-colors hover:bg-[#002991] disabled:opacity-80 disabled:cursor-not-allowed inline-flex items-center justify-center gap-3"
                 >
-                  {loading ? t("creating_account") : t("create_account")}
+                  {loading && (
+                    <span
+                      className="inline-block h-5 w-5 rounded-full border-2 border-white/30 border-t-white animate-spin"
+                      aria-hidden="true"
+                    />
+                  )}
+                  <span>
+                    {loading ? t("creating_account") : t("create_account")}
+                  </span>
                 </button>
               </div>
 

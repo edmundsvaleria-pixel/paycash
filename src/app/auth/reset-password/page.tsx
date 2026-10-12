@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSelector from "@/components/LanguageSelector";
@@ -64,7 +63,11 @@ export default function ResetPasswordPage() {
   if (!ready) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-[#686A6D]">Loading...</p>
+        <div
+          className="h-10 w-10 rounded-full border-[3px] border-gray-200 border-t-[#0070E0] animate-spin"
+          role="status"
+          aria-label="Loading"
+        />
       </div>
     );
   }
@@ -122,9 +125,15 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-full bg-[#0070E0] text-white text-base font-bold py-4 transition-colors hover:bg-[#005ea6] disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full rounded-full bg-[#0070E0] text-white text-base font-bold py-4 transition-colors hover:bg-[#005ea6] disabled:opacity-80 disabled:cursor-not-allowed inline-flex items-center justify-center gap-3"
               >
-                {loading ? t("updating") : t("update_password")}
+                {loading && (
+                  <span
+                    className="inline-block h-5 w-5 rounded-full border-2 border-white/30 border-t-white animate-spin"
+                    aria-hidden="true"
+                  />
+                )}
+                <span>{loading ? t("updating") : t("update_password")}</span>
               </button>
             </form>
           </div>

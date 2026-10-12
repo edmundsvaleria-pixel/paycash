@@ -92,7 +92,11 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-gray-500">Loading...</p>
+        <div
+          className="h-10 w-10 rounded-full border-[3px] border-gray-200 border-t-[#0070E0] animate-spin"
+          role="status"
+          aria-label="Loading"
+        />
       </div>
     );
   }
@@ -185,9 +189,15 @@ export default function SettingsPage() {
           <button
             type="submit"
             disabled={saving}
-            className="w-full rounded-full bg-[#0070E0] text-white text-base font-bold py-4 transition-colors hover:bg-[#005ea6] disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full rounded-full bg-[#0070E0] text-white text-base font-bold py-4 transition-colors hover:bg-[#005ea6] disabled:opacity-80 disabled:cursor-not-allowed inline-flex items-center justify-center gap-3"
           >
-            {saving ? "Saving..." : "Save settings"}
+            {saving && (
+              <span
+                className="inline-block h-5 w-5 rounded-full border-2 border-white/30 border-t-white animate-spin"
+                aria-hidden="true"
+              />
+            )}
+            <span>{saving ? "Saving..." : "Save settings"}</span>
           </button>
         </form>
       </main>

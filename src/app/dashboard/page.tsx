@@ -94,7 +94,11 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <p className="text-gray-500">Loading...</p>
+        <div
+          className="h-10 w-10 rounded-full border-[3px] border-gray-200 border-t-[#0070E0] animate-spin"
+          role="status"
+          aria-label="Loading"
+        />
       </div>
     );
   }
