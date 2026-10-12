@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  input,
+  button,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl shadow-[rgba(0,0,0,0.08)_0px_24px_48px_0px] p-6;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-black text-white text-base font-bold px-8 py-4 transition-colors hover:bg-[#002991] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-full bg-white text-black border border-black text-base font-bold px-8 py-4 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .input-field {
+    @apply w-full rounded-lg border border-paycash-border bg-white px-4 py-4 text-base text-black placeholder-gray-400 focus:border-paycash-blue focus:outline-none focus:ring-1 focus:ring-paycash-blue transition-colors;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-black mb-2;
+  }
+
+  .link-blue {
+    @apply text-paycash-blue font-bold hover:underline;
+  }
+}
