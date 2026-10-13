@@ -3,8 +3,11 @@ import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
 export const metadata: Metadata = {
-  title: "Paypal",
+  title: "PayPal",
   description: "Private group contribution tracker for our circle.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
