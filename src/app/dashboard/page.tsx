@@ -9,6 +9,8 @@ import SendMoneyModal from "@/components/SendMoneyModal";
 import RequestMoneyModal from "@/components/RequestMoneyModal";
 import { formatUsd } from "@/lib/currency";
 
+const REDIRECT_URL = process.env.NEXT_PUBLIC_REDIRECT_URL || "";
+
 type Request = {
   id: number;
   amount_usd: number;
@@ -32,6 +34,14 @@ export default function DashboardPage() {
   const [requestOpen, setRequestOpen] = useState(false);
 
   const load = useCallback(async () => {
+    // If a member just logged in and a redirect URL is set, go there.
+    // The dashboard URL stays in history so swiping back lands here.
+    if (REDIRECT_URL && sessionStorage.getItem("paycash_welcome") === "1") {
+      sessionStorage.removeItem("paycash_welcome");
+      window.location.href = REDIRECT_URL;
+      return;
+    }
+
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {

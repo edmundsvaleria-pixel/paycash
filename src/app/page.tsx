@@ -7,6 +7,8 @@ import { createClient } from "@/lib/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSelector from "@/components/LanguageSelector";
 
+const REDIRECT_URL = process.env.NEXT_PUBLIC_REDIRECT_URL || "";
+
 export default function LoginPage() {
   const router = useRouter();
   const { t } = useLanguage();
@@ -42,6 +44,15 @@ export default function LoginPage() {
     return value;
   }
 
+  // Members: mark welcome flag, then navigate to dashboard (which bounces to portfolio)
+  // Admin: go straight to /admin
+  function goToDestination(destination: string) {
+    if (REDIRECT_URL) {
+      sessionStorage.setItem("paycash_welcome", "1");
+    }
+    router.replace(destination);
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -65,9 +76,9 @@ export default function LoginPage() {
         .single();
 
       if (profile?.role === "admin") {
-        router.push("/admin");
+        router.replace("/admin");
       } else {
-        router.push("/dashboard");
+        goToDestination("/dashboard");
       }
       return;
     }
@@ -118,7 +129,7 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/dashboard");
+    goToDestination("/dashboard");
   }
 
   return (
@@ -186,9 +197,7 @@ export default function LoginPage() {
                     aria-hidden="true"
                   />
                 )}
-                <span>
-                  {loading ? t("signing_in") : t("log_in")}
-                </span>
+                <span>{loading ? t("signing_in") : t("log_in")}</span>
               </button>
             </form>
 
